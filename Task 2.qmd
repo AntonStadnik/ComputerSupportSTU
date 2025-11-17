@@ -1,0 +1,281 @@
+---
+title: "Task1"
+author: "Anton Stadnik"
+date: "14/10/2025"
+format:
+  html:
+    embed-resources: true
+editor: source
+---
+
+## Question 1 title
+
+Question description
+
+```{r}
+# code for solving task
+```
+
+
+## Question N title
+
+Question description
+
+
+# code for solving task
+
+
+# Task 1: Exploring Data Types in R
+# Theme: Lvyv — The Floating Sky City
+
+
+```{r}
+
+# -----------------------------
+# 1.1 Atomic Types
+# -----------------------------
+
+# numeric values
+avg_temperature <- 18.7     # degrees Celsius
+altitude_km     <- 7.5      # floating height above ground (km)
+energy_rating   <- 92.4     # sustainability rating
+water_reserves  <- 35.2     # in million liters
+
+# integer values
+population      <- as.integer(12000)
+watchtowers     <- as.integer(8)
+airships        <- as.integer(42)
+
+# logical values
+has_magic_crystals <- TRUE
+is_allied_empire   <- FALSE
+
+# character values
+city_name   <- "Lvyv"
+region_name <- "Sky Realm"
+city_type   <- "Floating Metropolis"
+
+cat("The city of", city_name, "is a", city_type, "in the", region_name,
+    "floating at", altitude_km, "km with a population of", population, "\n")
+
+```
+
+
+```{r}
+# -----------------------------
+# 1.2 Vectors
+# -----------------------------
+
+numeric_vector <- c(avg_temperature, altitude_km, energy_rating, water_reserves,
+                    population, watchtowers, airships)
+
+sequence_vector <- seq(20, 100, by = 5)
+
+set.seed(123)
+logical_vector <- sample(c(TRUE, FALSE), size = 10, replace = TRUE)
+
+```
+
+```{r}
+
+# -----------------------------
+# 1.3 Matrix
+# -----------------------------
+
+set.seed(42)
+lvyv_matrix <- matrix(sample(-50:50, 9, replace = TRUE),
+                      nrow = 3, ncol = 3)
+
+rownames(lvyv_matrix) <- c("Tower", "Docks", "Garden")
+colnames(lvyv_matrix) <- c("A", "B", "C")
+
+row_means <- rowMeans(lvyv_matrix)
+col_means <- colMeans(lvyv_matrix)
+
+lvyv_matrix
+row_means
+col_means
+
+```
+
+```{r}
+
+# -----------------------------
+# 1.4 List
+# -----------------------------
+
+lvyv_list <- list(
+  city_name = city_name,
+  numeric_vector = numeric_vector,
+  sequence_vector = sequence_vector,
+  logical_vector = logical_vector,
+  infrastructure_matrix = lvyv_matrix,
+  description = "Lvyv is a floating city sustained by magic crystals and airships, hovering gracefully above the clouds."
+)
+
+lvyv_list
+
+```
+
+```{r}
+
+# -----------------------------
+# 1.5 Factor
+# -----------------------------
+
+econ_levels <- factor(c("high", "medium", "medium", "high", "low", "medium", "high"))
+table(econ_levels)
+
+```
+
+```{r}
+
+# -----------------------------
+# 1.6 Data Frame
+# -----------------------------
+
+lvyv_df <- data.frame(
+  sector = c("Central Spire", "Harbor Deck", "Crystal Forge", "Sky Garden",
+             "Guild Quarters", "Aviary"),
+  visitors_per_day = c(500, 350, 200, 450, 180, 250),
+  is_restricted = c(TRUE, FALSE, TRUE, FALSE, FALSE, TRUE),
+  econ_class = factor(c("high", "medium", "high", "medium", "low", "medium"))
+)
+
+colnames(lvyv_df) <- c("Sector", "Visitors", "Restricted", "EconClass")
+
+str(lvyv_df)
+summary(lvyv_df)
+
+lvyv_df$TrafficLevel <- ifelse(lvyv_df$Visitors > 300, "high", "low")
+
+lvyv_df
+
+```
+
+
+# Task 2: Subsetting & Missing Data
+
+```{r}
+
+# -----------------------------
+# 2.1 Querying Vectors
+# -----------------------------
+
+# 2.1.1 Sequence Vector
+
+# 3rd element
+sequence_vector[3]
+
+# Elements 2 through 5
+sequence_vector[2:5]
+
+# Values greater than 20
+sequence_vector[sequence_vector > 20]
+
+```
+
+```{r}
+
+# 2.1.2 Logical Vector
+
+# Select TRUE values
+logical_vector[logical_vector]
+
+# Get indices of TRUE values
+which(logical_vector)
+
+```
+
+```{r}
+
+# -----------------------------
+# 2.2 Querying Your Universe List
+# -----------------------------
+
+# Print the description
+lvyv_list$description
+
+# Print the 3x3 matrix
+lvyv_list[[ "infrastructure_matrix" ]]
+
+# Second element of the numeric vector inside the list
+lvyv_list$numeric_vector[2]
+
+```
+
+```{r}
+
+# -----------------------------
+# 2.3 Investigating the Data Frame
+# -----------------------------
+
+# Print first 3 rows
+
+head(lvyv_df, 3)
+
+# Print value at row 4, column 1
+
+lvyv_df[4, 1]
+
+# Print logical column as vector
+
+lvyv_df$Restricted
+
+```
+
+```{r}
+
+# Logical subsetting
+
+df_subset <- lvyv_df[lvyv_df$Visitors > 300, ]
+df_subset
+
+```
+
+```{r}
+
+# Subsetting
+
+df_subset_2 <- lvyv_df[lvyv_df$EconClass %in% c("high", "low"), ]
+df_subset_2
+
+```
+
+```{r}
+
+# -----------------------------
+# 2.4 Handling “Corrupted” Data (Missing Values)
+# -----------------------------
+
+df_corrupted <- lvyv_df
+
+df_corrupted[2, 3] <- NA
+df_corrupted[5, 2] <- NA
+df_corrupted[6, 4] <- NA
+df_corrupted
+
+# Total missing values
+sum(is.na(df_corrupted))
+
+# Missing values per column
+colSums(is.na(df_corrupted))
+
+mean(df_corrupted$Visitors, na.rm = TRUE)
+
+df_clean <- na.omit(df_corrupted)
+df_clean
+
+```
+
+```{r}
+
+# -----------------------------
+# 2.5 Bonus Challenge
+# -----------------------------
+
+max_index <- which.max(lvyv_df$Visitors)
+max_index
+lvyv_df[max_index, ]
+
+```
