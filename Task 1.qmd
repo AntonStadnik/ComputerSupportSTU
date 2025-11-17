@@ -21,13 +21,15 @@ Question description
 
 Question description
 
-```{r}
+
 # code for solving task
 
 # =========================================================
 # Task 1: Exploring Data Types in R
 # Theme: Lvyv — The Floating Sky City
 # =========================================================
+
+```{r}
 
 # -----------------------------
 # 1.1 Atomic Types
@@ -56,6 +58,10 @@ city_type   <- "Floating Metropolis"
 cat("The city of", city_name, "is a", city_type, "in the", region_name,
     "floating at", altitude_km, "km with a population of", population, "\n")
 
+```
+
+
+```{r}
 # -----------------------------
 # 1.2 Vectors
 # -----------------------------
@@ -67,6 +73,10 @@ sequence_vector <- seq(20, 100, by = 5)
 
 set.seed(123)
 logical_vector <- sample(c(TRUE, FALSE), size = 10, replace = TRUE)
+
+```
+
+```{r}
 
 # -----------------------------
 # 1.3 Matrix
@@ -86,6 +96,10 @@ lvyv_matrix
 row_means
 col_means
 
+```
+
+```{r}
+
 # -----------------------------
 # 1.4 List
 # -----------------------------
@@ -101,12 +115,20 @@ lvyv_list <- list(
 
 lvyv_list
 
+```
+
+```{r}
+
 # -----------------------------
 # 1.5 Factor
 # -----------------------------
 
 econ_levels <- factor(c("high", "medium", "medium", "high", "low", "medium", "high"))
 table(econ_levels)
+
+```
+
+```{r}
 
 # -----------------------------
 # 1.6 Data Frame
@@ -128,4 +150,6 @@ summary(lvyv_df)
 lvyv_df$TrafficLevel <- ifelse(lvyv_df$Visitors > 300, "high", "low")
 
 lvyv_df
+
+```
 
