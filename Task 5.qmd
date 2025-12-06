@@ -1,0 +1,543 @@
+---
+title: "Task1"
+author: "Anton Stadnik"
+date: "14/10/2025"
+format:
+  html:
+    embed-resources: true
+editor: source
+---
+
+# Task 1: Exploring Data Types in R
+# Theme: Lvyv — The Floating Sky City
+
+
+```{r}
+
+# -----------------------------
+# 1.1 Atomic Types
+# -----------------------------
+
+# numeric values
+avg_temperature <- 18.7     # degrees Celsius
+altitude_km     <- 7.5      # floating height above ground (km)
+energy_rating   <- 92.4     # sustainability rating
+water_reserves  <- 35.2     # in million liters
+
+# integer values
+population      <- as.integer(12000)
+watchtowers     <- as.integer(8)
+airships        <- as.integer(42)
+
+# logical values
+has_magic_crystals <- TRUE
+is_allied_empire   <- FALSE
+
+# character values
+city_name   <- "Lvyv"
+region_name <- "Sky Realm"
+city_type   <- "Floating Metropolis"
+
+cat("The city of", city_name, "is a", city_type, "in the", region_name,
+    "floating at", altitude_km, "km with a population of", population, "\n")
+
+```
+
+
+```{r}
+# -----------------------------
+# 1.2 Vectors
+# -----------------------------
+
+numeric_vector <- c(avg_temperature, altitude_km, energy_rating, water_reserves,
+                    population, watchtowers, airships)
+
+sequence_vector <- seq(20, 100, by = 5)
+
+set.seed(123)
+logical_vector <- sample(c(TRUE, FALSE), size = 10, replace = TRUE)
+
+```
+
+```{r}
+
+# -----------------------------
+# 1.3 Matrix
+# -----------------------------
+
+set.seed(42)
+lvyv_matrix <- matrix(sample(-50:50, 9, replace = TRUE),
+                      nrow = 3, ncol = 3)
+
+rownames(lvyv_matrix) <- c("Tower", "Docks", "Garden")
+colnames(lvyv_matrix) <- c("A", "B", "C")
+
+row_means <- rowMeans(lvyv_matrix)
+col_means <- colMeans(lvyv_matrix)
+
+lvyv_matrix
+row_means
+col_means
+
+```
+
+```{r}
+
+# -----------------------------
+# 1.4 List
+# -----------------------------
+
+lvyv_list <- list(
+  city_name = city_name,
+  numeric_vector = numeric_vector,
+  sequence_vector = sequence_vector,
+  logical_vector = logical_vector,
+  infrastructure_matrix = lvyv_matrix,
+  description = "Lvyv is a floating city sustained by magic crystals and airships, hovering gracefully above the clouds."
+)
+
+lvyv_list
+
+```
+
+```{r}
+
+# -----------------------------
+# 1.5 Factor
+# -----------------------------
+
+econ_levels <- factor(c("high", "medium", "medium", "high", "low", "medium", "high"))
+table(econ_levels)
+
+```
+
+```{r}
+
+# -----------------------------
+# 1.6 Data Frame
+# -----------------------------
+
+lvyv_df <- data.frame(
+  sector = c("Central Spire", "Harbor Deck", "Crystal Forge", "Sky Garden",
+             "Guild Quarters", "Aviary"),
+  visitors_per_day = c(500, 350, 200, 450, 180, 250),
+  is_restricted = c(TRUE, FALSE, TRUE, FALSE, FALSE, TRUE),
+  econ_class = factor(c("high", "medium", "high", "medium", "low", "medium"))
+)
+
+colnames(lvyv_df) <- c("Sector", "Visitors", "Restricted", "EconClass")
+
+str(lvyv_df)
+summary(lvyv_df)
+
+lvyv_df$TrafficLevel <- ifelse(lvyv_df$Visitors > 300, "high", "low")
+
+lvyv_df
+
+```
+
+
+# Task 2: Subsetting & Missing Data
+
+```{r}
+
+# -----------------------------
+# 2.1 Querying Vectors
+# -----------------------------
+
+# 2.1.1 Sequence Vector
+
+# 3rd element
+sequence_vector[3]
+
+# Elements 2 through 5
+sequence_vector[2:5]
+
+# Values greater than 20
+sequence_vector[sequence_vector > 20]
+
+```
+
+```{r}
+
+# 2.1.2 Logical Vector
+
+# Select TRUE values
+logical_vector[logical_vector]
+
+# Get indices of TRUE values
+which(logical_vector)
+
+```
+
+```{r}
+
+# -----------------------------
+# 2.2 Querying Your Universe List
+# -----------------------------
+
+# Print the description
+lvyv_list$description
+
+# Print the 3x3 matrix
+lvyv_list[[ "infrastructure_matrix" ]]
+
+# Second element of the numeric vector inside the list
+lvyv_list$numeric_vector[2]
+
+```
+
+```{r}
+
+# -----------------------------
+# 2.3 Investigating the Data Frame
+# -----------------------------
+
+# Print first 3 rows
+
+head(lvyv_df, 3)
+
+# Print value at row 4, column 1
+
+lvyv_df[4, 1]
+
+# Print logical column as vector
+
+lvyv_df$Restricted
+
+```
+
+```{r}
+
+# Logical subsetting
+
+df_subset <- lvyv_df[lvyv_df$Visitors > 300, ]
+df_subset
+
+```
+
+```{r}
+
+# Subsetting
+
+df_subset_2 <- lvyv_df[lvyv_df$EconClass %in% c("high", "low"), ]
+df_subset_2
+
+```
+
+```{r}
+
+# -----------------------------
+# 2.4 Handling “Corrupted” Data (Missing Values)
+# -----------------------------
+
+df_corrupted <- lvyv_df
+
+df_corrupted[2, 3] <- NA
+df_corrupted[5, 2] <- NA
+df_corrupted[6, 4] <- NA
+df_corrupted
+
+# Total missing values
+sum(is.na(df_corrupted))
+
+# Missing values per column
+colSums(is.na(df_corrupted))
+
+mean(df_corrupted$Visitors, na.rm = TRUE)
+
+df_clean <- na.omit(df_corrupted)
+df_clean
+
+```
+
+```{r}
+
+# -----------------------------
+# 2.5 Bonus Challenge
+# -----------------------------
+
+max_index <- which.max(lvyv_df$Visitors)
+max_index
+lvyv_df[max_index, ]
+
+```
+
+# Task 3: Expanding Your Universe
+
+```{r}
+
+# -----------------------------
+# 3.1. The Quest: Find Your Data
+# -----------------------------
+
+# Data from: https://datahub.io/core/population-city?utm_source=chatgpt.com#unsd-citypopulation-year-both
+
+```
+
+```{r}
+
+# -----------------------------
+# 3.2. The Import: Load Your Data
+# -----------------------------
+
+library(dplyr)
+library(readr)
+
+my_real_data <- read_csv("unsd-citypopulation-year-both.csv")
+
+glimpse(my_real_data)
+head(my_real_data)
+summary(my_real_data)
+
+```
+
+```{r}
+
+# -----------------------------
+# 3.3. The Interrogation: Explore with dplyr
+# -----------------------------
+
+
+# Question 1: Which 10 cities have the highest population in the most recent year?
+
+latest_year <- max(as.numeric(my_real_data$Year), na.rm = TRUE)
+
+
+
+my_real_data %>%
+  mutate(Year = as.numeric(Year)) %>%
+  filter(Year == latest_year, !is.na(Value)) %>%
+  select(City, `Country or Area`, Year, Population = Value) %>%
+  arrange(desc(Population)) %>%
+  slice_head(n = 10)
+
+
+# Question 2: Show all records for the city "TOKYO"
+
+my_real_data %>%
+  filter(City == "TOKYO")
+
+
+# Question 3: Create a new column population_millions showing population in millions
+
+my_real_data %>%
+  mutate(population_millions = Value / 1e6) %>%
+  select(City, Year, population_millions) %>%
+  head(10)
+
+
+# Question 4: What is the average city population for each country?
+
+my_real_data %>%
+  group_by(`Country or Area`) %>%
+  summarise(avg_population = mean(Value, na.rm = TRUE)) %>%
+  arrange(desc(avg_population)) %>%
+  slice_head(n = 10)
+
+
+# Question 5: How many times does each city appear in the dataset? (Count records per city)
+
+my_real_data %>%
+  group_by(City) %>%
+  summarise(records = n()) %>%
+  arrange(desc(records)) %>%
+  slice_head(n = 10)
+
+```
+
+# Task 4. Building a “Toolkit” for Your Universe (Functions)
+
+```{r}
+
+# -----------------------------
+# 4.1. The “Greeting” Function (A Simple Start)
+# -----------------------------
+
+welcome_to_my_universe <- function(your_name, universe_name = "Lvyv - Floating City") {
+  cat("-------------------------------------------\n")
+  cat("Welcome to the Analysis Toolkit for:", universe_name, "\n")
+  cat("Report prepared by:", your_name, "\n")
+  cat("-------------------------------------------\n\n")
+}
+
+welcome_to_my_universe("Anton")
+
+```
+
+```{r}
+
+# -----------------------------
+# 4.2. The “Loading” Function (A Good Practice)
+# -----------------------------
+
+load_and_inspect <- function(file_path) {
+  library(readr)
+  library(dplyr)
+  
+  data <- read_csv(file_path, show_col_types = FALSE)
+  
+  cat("--- Data Loaded Successfully ---\n")
+  print(glimpse(data))
+  
+  cat("\n--- First 6 Rows ---\n")
+  print(head(data))
+  
+  return(data)
+}
+
+# Call the function
+my_data <- load_and_inspect("unsd-citypopulation-year-both.csv")
+
+```
+
+```{r}
+
+# -----------------------------
+# 4.3. The “Query” Function (The Core of the Task)
+# -----------------------------
+
+top_cities_by_year <- function(data, year_value, n = 10) {
+  data <- data %>%
+    mutate(Year = suppressWarnings(as.numeric(Year)))
+  
+  result <- data %>%
+    filter(Year == year_value, !is.na(Value)) %>%
+    select(City, `Country or Area`, Year, Population = Value) %>%
+    arrange(desc(Population)) %>%
+    slice_head(n = n)
+  
+  return(result)
+}
+
+# Call the function
+top_10_latest <- top_cities_by_year(my_data, max(as.numeric(my_data$Year), na.rm = TRUE), n = 10)
+top_10_latest
+
+```
+
+```{r}
+
+# -----------------------------
+# 4.4. The “Reporting” Function
+# -----------------------------
+
+generate_report <- function(data, city_name) {
+  
+  data <- data %>%
+    mutate(Year = suppressWarnings(as.numeric(Year)))
+  
+  city_data <- data %>%
+    filter(City == city_name)
+  
+  if (nrow(city_data) == 0) {
+    cat("No records found for city:", city_name, "\n")
+    return(NULL)
+  }
+  
+  avg_pop <- mean(city_data$Value, na.rm = TRUE)
+  max_pop <- max(city_data$Value, na.rm = TRUE)
+  min_pop <- min(city_data$Value, na.rm = TRUE)
+  years_range <- paste(min(city_data$Year), "to", max(city_data$Year))
+  record_count <- nrow(city_data)
+  
+  cat("----------------------------------\n")
+  cat("   Population Report for:", city_name, "\n")
+  cat("----------------------------------\n")
+  cat("Number of records:", record_count, "\n")
+  cat("Year range:", years_range, "\n")
+  cat("Average population:", round(avg_pop, 2), "\n")
+  cat("Maximum population:", max_pop, "\n")
+  cat("Minimum population:", min_pop, "\n")
+  cat("----------------------------------\n\n")
+}
+
+# Call the function for two cities
+generate_report(my_data, "TOKYO")
+generate_report(my_data, "LONDON")
+
+```
+
+# Task 5. Visualising Your Universe (Base R & ggplot2)
+
+```{r}
+
+library(ggplot2)
+library(dplyr)
+
+# -----------------------------
+# 5.1. The Quick Sketch (Base R Histogram)
+# -----------------------------
+
+hist(my_data$Value,
+     main = "Distribution of City Population in Lvyv Universe",
+     xlab = "Population (Value)",
+     col = "lightblue",
+     border = "white")
+
+```
+
+```{r}
+
+# -----------------------------
+# 5.2. The Relationship Map (ggplot2 Scatter Plot)
+# -----------------------------
+
+ggplot(my_data, aes(x = Year, y = Value)) +
+  geom_point(alpha = 0.5) +
+  geom_smooth() +
+  labs(
+    title = "Population Over Years",
+    x = "Year",
+    y = "Population"
+  ) +
+  theme_minimal()
+
+```
+
+```{r}
+
+# -----------------------------
+# 5.3. The Comparison (ggplot2 Boxplot)
+# -----------------------------
+
+ggplot(my_data, aes(x = Sex, y = Value, fill = Sex)) +
+  geom_boxplot() +
+  labs(
+    title = "Population Distribution by Sex Category",
+    x = "Sex",
+    y = "Population"
+  ) +
+  theme_light() +
+  theme(legend.position = "none")
+
+```
+
+```{r}
+
+# -----------------------------
+# 5.4. The “Deep Dive” (Faceting or Custom)
+# -----------------------------
+
+ggplot(my_data, aes(x = Value)) +
+  geom_histogram(bins = 20, fill = "coral", color = "black") +
+  facet_wrap(~ Sex) +
+  labs(
+    title = "Population Distribution Faceted by Sex",
+    x = "Population",
+    y = "Count"
+  )
+
+```
+
+```{r}
+
+# -----------------------------
+# 5.5 5.5. Final Step: Exporting (Saving Your Work)
+# -----------------------------
+
+ggsave("my_universe_plot.png", width = 8, height = 6)
+
+```
+
+
